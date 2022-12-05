@@ -73,20 +73,16 @@ func buildRanges(input []string) []Range {
 	return ranges
 }
 
-
-func overlaps(a, b []int) bool{
-
+func overlaps(a, b []int) bool {
 	for _, valueA := range a {
 		for _, valueB := range b {
-				if valueA == valueB {
-					return true
-				}
+			if valueA == valueB {
+				return true
 			}
 		}
-
+	}
 	return false
 }
-
 
 func main() {
 	var input []string
@@ -94,7 +90,7 @@ func main() {
 	data := buildRanges(input)
 	sum := 0
 	for _, d := range data {
-		if overlaps(d.FullA, d.FullB){
+		if overlaps(d.FullA, d.FullB) {
 			sum += 1
 		}
 	}
