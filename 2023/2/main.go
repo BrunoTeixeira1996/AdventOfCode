@@ -13,7 +13,7 @@ Game 3: 8 green, 6 blue, 20 red; 5 blue, 4 red, 13 green; 5 green, 1 red
 Game 4: 1 green, 3 red, 6 blue; 3 green, 6 red; 3 green, 15 blue, 14 red
 Game 5: 6 red, 1 blue, 3 green; 2 blue, 1 red, 2 green`
 
-const firstPartInput = `Game 1: 1 green, 4 blue; 1 blue, 2 green, 1 red; 1 red, 1 green, 2 blue; 1 green, 1 red; 1 green; 1 green, 1 blue, 1 red
+const Input = `Game 1: 1 green, 4 blue; 1 blue, 2 green, 1 red; 1 red, 1 green, 2 blue; 1 green, 1 red; 1 green; 1 green, 1 blue, 1 red
 Game 2: 2 blue, 2 red, 6 green; 1 red, 6 green, 7 blue; 10 green, 8 blue, 1 red; 2 green, 18 blue, 2 red; 14 blue, 3 green, 1 red; 8 green, 1 red, 9 blue
 Game 3: 6 green, 5 blue, 9 red; 4 blue, 1 green, 13 red; 9 green, 14 red, 1 blue
 Game 4: 14 green, 3 blue, 16 red; 20 red; 4 green, 2 red, 1 blue; 10 blue, 11 green, 18 red; 3 red, 3 blue, 6 green; 2 green, 18 red, 9 blue
@@ -177,7 +177,7 @@ func parseInput(input string) []Game {
 	return games
 }
 
-func firstPart(games []Game) int {
+func firstPart(games []Game) {
 	count := 0
 	sum := 0
 
@@ -195,11 +195,45 @@ func firstPart(games []Game) int {
 		count = 0
 	}
 	fmt.Println(sum)
+}
 
-	return 0
+func secondPart(games []Game) {
+	gx := []struct{
+		ID int
+		Bag Bag
+	}{}
+
+	for _ , g := range games {
+		gxx := struct{
+			ID int
+			Bag Bag
+		}{}
+		bx := Bag{Blue: 0, Red: 0, Green: 0}
+		for _ , bag := range g.Bags {
+			if bag.Blue > bx.Blue {
+				bx.Blue = bag.Blue
+			}
+			if bag.Red > bx.Red {
+				bx.Red = bag.Red
+			}
+			if bag.Green > bx.Green {
+				bx.Green = bag.Green
+			}
+		}
+		gxx.ID = g.ID
+		gxx.Bag = bx
+		gx = append(gx, gxx)
+	}
+
+	var res int
+	for _ , x := range gx {
+		res += x.Bag.Blue*x.Bag.Red*x.Bag.Green
+	}
+	fmt.Println(res)
 }
 
 func main() {
-	games := parseInput(firstPartInput)
-	firstPart(games)
+	games := parseInput(Input)
+	//firstPart(games)
+	secondPart(games)
 }
